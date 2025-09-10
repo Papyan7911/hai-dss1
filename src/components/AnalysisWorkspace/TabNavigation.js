@@ -81,7 +81,7 @@ const TabNavigation = ({ activeTab, onTabChange, projectPhase }) => {
         },
         {
             id: 'fuzzy',
-            label: ' տրամաբանություն',
+            label: 'Ոչ հստակ տրամաբանություն',
             icon: '🔮',
             description: 'Վստահության մակարդակի գնահատում',
             enabled: getTabEnabled('fuzzy'),
