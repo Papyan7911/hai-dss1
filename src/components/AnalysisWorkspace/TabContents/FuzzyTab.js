@@ -1,7 +1,7 @@
 // src/components/AnalysisWorkspace/TabContents/FuzzyTab.js
 // Անորոշ տրամաբանության վերլուծության տաբ - ամբողջական տարբերակ
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useData } from '../../../context/DataContext';
 import { ChartCard, InfoCard } from '../../UI/Card';
 import Button from '../../UI/Button';
@@ -26,6 +26,10 @@ const FuzzyTab = () => {
         rawData,
         syntheticData
     } = useData();
+
+    console.log(fuzzyResults, 'applyFuzzyAnalysis');
+    console.log(currentData, 'hhhhhh', rawData);
+
 
     /**
      * Անորոշ տրամաբանության կիրառում
@@ -65,6 +69,15 @@ const FuzzyTab = () => {
             alert('Վերլուծության ժամանակ սխալ առաջացավ');
         }
     };
+
+    useEffect(() => {
+        // Check if fuzzyResults is empty
+        if (!fuzzyResults || Object.keys(fuzzyResults).length === 0) {
+            console.log('fuzzyResults is empty, applying analysis');
+            applyFuzzyAnalysis();
+        }
+    }, [fuzzyResults]); // Run whenever fuzzyResults changes
+
 
     if (!currentData || currentData.length === 0) {
         return (

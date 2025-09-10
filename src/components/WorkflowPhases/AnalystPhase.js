@@ -37,6 +37,7 @@ const AnalystPhase = ({
         setClusterData,
         setDecisionResults,
         setFuzzyResults,
+        setRawData
     } = useData();
 
     const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -60,6 +61,8 @@ const AnalystPhase = ({
             if (managerData.dataType) {
                 setDataType(managerData.dataType);
             }
+            setRawData(managerData.rawData);
+
         }
 
         // --- 2. Загружаем данные AnalystPhase, если есть ---
@@ -89,6 +92,7 @@ const AnalystPhase = ({
         if (expertData) {
             if (expertData.fuzzyResults && typeof setFuzzyResults === 'function') {
                 setFuzzyResults(expertData.fuzzyResults);
+                console.log(expertData.fuzzyResults, 'expertData.fuzzyResults');
             }
             if (expertData.clusterData && typeof setClusterData === 'function') {
                 setClusterData(expertData.clusterData);

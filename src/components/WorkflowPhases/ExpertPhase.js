@@ -30,9 +30,10 @@ const ExpertPhase = ({
         setDecisionResults,
         setFinalRecommendations,
         setProjectName,
-        setDataType
+        setDataType,
+        setRawData
     } = useData();
-    
+
 
     const [isProcessing, setIsProcessing] = useState(false);
     const [currentStep, setCurrentStep] = useState('');
@@ -66,6 +67,8 @@ const ExpertPhase = ({
             if (managerData.dataType) {
                 setDataType(managerData.dataType);
             }
+            setRawData(managerData.rawData);
+
         }
 
         // --- 1. Подставляем данные аналитической фазы ---
