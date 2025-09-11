@@ -306,52 +306,48 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+<section
+    className="py-12 sm:py-16 lg:py-20 bg-gradient-to-r from-[#1c92d2]/10 to-[#0ea5e9]/10"
+    id="video-section"
+>
+    <div className="max-w-4xl lg:max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-4 sm:mb-6 leading-tight">
+            Համակարգի աշխատանքը
+        </h2>
 
-            <section
-                className="py-12 sm:py-16 lg:py-20 bg-gradient-to-r from-[#1c92d2]/10 to-[#0ea5e9]/10"
-                id="video-section"
-            >
-                <div className="max-w-4xl lg:max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-4 sm:mb-6 leading-tight">
-                        Համակարգի աշխատանքը
-                    </h2>
+        <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl">
+            {/* Видео или фон */}
+            {isPlaying ? (
+                <video
+                    src={'https://gateway.amracode.am/video_final1.mov'}
+                    className="w-full"
+                    autoPlay
+                    controls
+                    preload="metadata"
+                    onEnded={() => setIsPlaying(false)}
+                />
+            ) : (
+                <img
+                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1600&h=900&fit=crop&auto=format"
+                    alt="Demo Video Thumbnail"
+                    className="w-full object-contain"
+                />
+            )}
 
-                    <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl">
-                        {/* Background Image */}
-                        <img
-                            src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=450&fit=crop&auto=format"
-                            alt="Demo Video Thumbnail"
-                            className="w-full h-48 sm:h-64 lg:h-96 object-cover"
-                        />
-
-                        {/* Video element */}
-                        {isPlaying && (
-                            <video
-                                src={'https://gateway.amracode.am/video_final1.mov'}
-                                className="absolute inset-0 w-full h-full object-cover"
-                                autoPlay
-                                controls
-                                onEnded={() => setIsPlaying(false)}
-                            />
-                        )}
-
-                        {/* Play Button */}
-                        {!isPlaying && (
-                            <div className="absolute inset-0 bg-gradient-to-t from-[#1c92d2]/60 to-transparent flex items-center justify-center">
-                                <button
-                                    onClick={handlePlay}
-                                    className="group w-16 h-16 sm:w-20 sm:h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110"
-                                >
-                                    <Play className="w-6 h-6 sm:w-8 sm:h-8 text-white ml-1" />
-                                </button>
-                            </div>
-                        )}
-
-                        {/* Bottom info */}
-
-                    </div>
+            {/* Play Button */}
+            {!isPlaying && (
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1c92d2]/60 to-transparent flex items-center justify-center">
+                    <button
+                        onClick={handlePlay}
+                        className="group w-16 h-16 sm:w-20 sm:h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110"
+                    >
+                        <Play className="w-6 h-6 sm:w-8 sm:h-8 text-white ml-1" />
+                    </button>
                 </div>
-            </section>
+            )}
+        </div>
+    </div>
+</section>
 
             {/* Process Section - Responsive */}
             <section id="about" className="py-12 sm:py-16 lg:py-20 bg-gradient-to-r from-[#1c92d2]/20 to-[#0ea5e9]/20">
