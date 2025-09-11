@@ -7,7 +7,11 @@ import axios from 'axios';
 export const generateAIScenarios = async (dataType, analysisResults, clusterData = [], contextData = {}) => {
     try {
         // Prompt-ի պատրաստում
-        const prompt = buildContextPrompt(dataType, analysisResults, clusterData, contextData);
+        const cleanedResults = { ...analysisResults };
+        delete cleanedResults.fuzzyResults?.confidenceDistribution;
+        console.log(cleanedResults, 'jjjjjjjjjjjj');
+
+        const prompt = buildContextPrompt(dataType, cleanedResults, clusterData, contextData);
 
         console.log(prompt, '🔥 Prompt');
 

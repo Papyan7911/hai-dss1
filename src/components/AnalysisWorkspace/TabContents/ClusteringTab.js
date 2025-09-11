@@ -179,7 +179,7 @@ const ClusteringTab = () => {
         const syntheticPerCluster = Math.floor(syntheticData.length / clusterData.length);
         const remainingSynthetic = syntheticData.length % clusterData.length;
 
-        return clusterData.map((cluster, index) => {
+        return clusterData?.map((cluster, index) => {
             const syntheticCount = syntheticPerCluster + (index < remainingSynthetic ? 1 : 0);
             const startIndex = index * syntheticPerCluster + Math.min(index, remainingSynthetic);
             const clusterSyntheticData = syntheticData.slice(startIndex, startIndex + syntheticCount);
