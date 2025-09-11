@@ -13,6 +13,11 @@ const Home = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [openIndex, setOpenIndex] = useState(null);
 
+    const [isPlaying, setIsPlaying] = useState(false);
+    const handlePlay = () => {
+        setIsPlaying(true);
+    };
+
     const toggleDescription = (index) => {
         setOpenIndex(openIndex === index ? null : index);
     };
@@ -302,30 +307,48 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Demo Video Section - Responsive */}
-            <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-r from-[#1c92d2]/10 to-[#0ea5e9]/10" id='video-section'>
+            <section
+                className="py-12 sm:py-16 lg:py-20 bg-gradient-to-r from-[#1c92d2]/10 to-[#0ea5e9]/10"
+                id="video-section"
+            >
                 <div className="max-w-4xl lg:max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-4 sm:mb-6 leading-tight">
                         Համակարգի աշխատանքը
                     </h2>
-                    {/* <p className="text-base sm:text-lg lg:text-xl text-white/80 mb-8 sm:mb-12 leading-relaxed">
-                        3 րոպեանոց դեմո վիդեո՝ համակարգի հիմնական հնարավորությունների մասին
-                    </p> */}
+
                     <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl">
+                        {/* Background Image */}
                         <img
                             src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=450&fit=crop&auto=format"
                             alt="Demo Video Thumbnail"
                             className="w-full h-48 sm:h-64 lg:h-96 object-cover"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#1c92d2]/60 to-transparent flex items-center justify-center">
-                            <button className="group w-16 h-16 sm:w-20 sm:h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110">
-                                <Play className="w-6 h-6 sm:w-8 sm:h-8 text-white ml-1" />
-                            </button>
-                        </div>
-                        <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 text-white">
-                            <h3 className="text-lg sm:text-xl font-bold mb-1 sm:mb-2">Համակարգի ցուցադրություն</h3>
-                            <p className="text-xs sm:text-sm opacity-80">3:24 րոպե</p>
-                        </div>
+
+                        {/* Video element */}
+                        {isPlaying && (
+                            <video
+                                src={'https://gateway.amracode.am/video_final.mov'}
+                                className="absolute inset-0 w-full h-full object-cover"
+                                autoPlay
+                                controls
+                                onEnded={() => setIsPlaying(false)}
+                            />
+                        )}
+
+                        {/* Play Button */}
+                        {!isPlaying && (
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#1c92d2]/60 to-transparent flex items-center justify-center">
+                                <button
+                                    onClick={handlePlay}
+                                    className="group w-16 h-16 sm:w-20 sm:h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110"
+                                >
+                                    <Play className="w-6 h-6 sm:w-8 sm:h-8 text-white ml-1" />
+                                </button>
+                            </div>
+                        )}
+
+                        {/* Bottom info */}
+
                     </div>
                 </div>
             </section>
