@@ -317,7 +317,7 @@ const ScenariosTab = ({ projectId }) => {
      */
     const filteredScenarios = scenarios?.filter(scenario => {
         if (filterPriority === 'all') return true;
-        return scenario.priority === filterPriority;
+        return scenario?.risks?.some(risk => risk?.impact === filterPriority);
     }) || [];
 
     console.log(scenarios, 'բարելավման ծրագիր');
@@ -471,9 +471,9 @@ const ScenariosTab = ({ projectId }) => {
                                 className="px-3 py-1 border border-gray-300 rounded-lg text-sm"
                             >
                                 <option value="all">Բոլոր սցենարները ({scenarios.length})</option>
-                                <option value="high">Բարձր առաջնահերթություն ({scenarios.filter(s => s.priority === 'high').length})</option>
-                                <option value="medium">Միջին առաջնահերթություն ({scenarios.filter(s => s.priority === 'medium').length})</option>
-                                <option value="low">Ցածր առաջնահերթություն ({scenarios.filter(s => s.priority === 'low').length})</option>
+                                <option value="high">Բարձր առաջնահերթություն ({scenarios.filter(s => s?.risks[0]?.impact == 'high').length})</option>
+                                <option value="medium">Միջին առաջնահերթություն ({scenarios.filter(s => s?.risks[0]?.impact == 'medium').length})</option>
+                                <option value="low">Ցածր առաջնահերթություն ({scenarios.filter(s => s?.risks[0]?.impact == 'low').length})</option>
                             </select>
                         </div>
 
@@ -814,30 +814,36 @@ const ReadinessCheck = ({ label, ready }) => {
  * Սցենարների վիճակագրության բաղադրիչ
  */
 const ScenarioStatistics = ({ scenarios }) => {
-    const priorityCounts = scenarios.reduce((acc, scenario) => {
-        acc[scenario.priority] = (acc[scenario.priority] || 0) + 1;
-        return acc;
-    }, {});
+    // Считаем количество рисков по impact
+    const impactCounts = scenarios?.flatMap(scenario => scenario?.risks?.map(risk => risk?.impact) ?? [])
+        .reduce((acc, impact) => {
+            if (impact) {
+                acc[impact] = (acc[impact] ?? 0) + 1;
+            }
+            return acc;
+        }, {});
 
-    const totalActions = scenarios.reduce((sum, scenario) => sum + scenario.actions.length, 0);
-    const avgActionsPerScenario = (totalActions / scenarios.length).toFixed(1);
-    const aiGeneratedCount = scenarios.filter(s => s.metadata?.aiGenerated).length;
+    const totalActions = scenarios?.reduce((sum, scenario) => sum + (scenario?.actions?.length ?? 0), 0) ?? 0;
+    const avgActionsPerScenario = scenarios?.length
+        ? (totalActions / scenarios.length).toFixed(1)
+        : '0.0';
+    const aiGeneratedCount = scenarios?.filter(s => s?.metadata?.aiGenerated)?.length ?? 0;
 
     return (
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             <div className="text-center p-4 bg-red-50 rounded-lg">
-                <div className="text-2xl font-bold text-red-600">{priorityCounts.high || 0}</div>
-                <div className="text-sm text-red-700">Բարձր առաջնահերթություն</div>
+                <div className="text-2xl font-bold text-red-600">{impactCounts?.high ?? 0}</div>
+                <div className="text-sm text-red-700">Բարձր ազդեցություն</div>
             </div>
 
             <div className="text-center p-4 bg-yellow-50 rounded-lg">
-                <div className="text-2xl font-bold text-yellow-600">{priorityCounts.medium || 0}</div>
-                <div className="text-sm text-yellow-700">Միջին առաջնահերթություն</div>
+                <div className="text-2xl font-bold text-yellow-600">{impactCounts?.medium ?? 0}</div>
+                <div className="text-sm text-yellow-700">Միջին ազդեցություն</div>
             </div>
 
             <div className="text-center p-4 bg-green-50 rounded-lg">
-                <div className="text-2xl font-bold text-green-600">{priorityCounts.low || 0}</div>
-                <div className="text-sm text-green-700">Ցածր առաջնահերթություն</div>
+                <div className="text-2xl font-bold text-green-600">{impactCounts?.low ?? 0}</div>
+                <div className="text-sm text-green-700">Ցածր ազդեցություն</div>
             </div>
 
             <div className="text-center p-4 bg-blue-50 rounded-lg">
@@ -852,6 +858,7 @@ const ScenarioStatistics = ({ scenarios }) => {
         </div>
     );
 };
+
 
 // Маппер: backend → frontend
 const mapBackendScenarioToFrontend = (scenario) => {
