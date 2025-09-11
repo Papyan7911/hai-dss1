@@ -327,7 +327,7 @@ const Home = () => {
                         {/* Video element */}
                         {isPlaying && (
                             <video
-                                src={'https://gateway.amracode.am/video_final.mov'}
+                                src={'https://gateway.amracode.am/video_final1.mov'}
                                 className="absolute inset-0 w-full h-full object-cover"
                                 autoPlay
                                 controls
